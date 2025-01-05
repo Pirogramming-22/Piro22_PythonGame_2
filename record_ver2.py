@@ -94,6 +94,7 @@ def get_input(prompt, result):
 
 def print_correct(player):
     print(f"\n\033[1m🌟🌟{player}님 정답입니다!🌟🌟\033[0m\n\n")
+    time.sleep(1)
 
 # 사람 vs 컴퓨터
 # 4. user의 input으로 정답인지 아닌지 확인하는 함수 (user 시작으로 설정)
@@ -119,6 +120,7 @@ def random_song_answer_computer(track, userName, playerName, friends):
             print('-'*20 + '\n')
             print("⚠️⚠️ 5초 안에 정답을 입력해주세요!! 안그러면 다음 사람에게 차례가 넘어갑니다 ⚠️⚠️\n")
             print('-'*20 + '\n')
+            time.sleep(1)
             result = []
             input_thread = threading.Thread(target=get_input, args=(f"{friends[friend_id]}님 위 가사에 해당하는 제목을 입력해 주세요!🎶🎶(가사를 다시 보고 싶다면 '가사'를 입력해 주세요)\n\n{userName} : ", result))
             input_thread.daemon = True
@@ -127,13 +129,8 @@ def random_song_answer_computer(track, userName, playerName, friends):
 
             if not result:  # 시간 초과
                 print(f"\n\n⏰ {userName}님 시간 초과! 다음 사람의 차례입니다 ⏰\n")
+                time.sleep(1)
                 friend_id += 1
-                continue
-
-            user_input = result[0]
-            
-            if user_input == "가사":
-                random_song(track)
                 continue
 
             user_input = result[0]
@@ -161,6 +158,7 @@ def random_song_answer_computer(track, userName, playerName, friends):
                     return userName
             
             print("☠️ 틀렸습니다 ㅠㅠ ☠️\n")
+            time.sleep(1)
             friend_id += 1
         # player가 컴퓨터인지 확인
         else:
@@ -176,11 +174,13 @@ def random_song_answer_computer(track, userName, playerName, friends):
                 return friends[friend_id]  # 컴퓨터가 이겼을 때만 게임 종료
             else:
                 print("☠️ 틀렸습니다 ㅠㅠ ☠️\n")
+                time.sleep(1)
                 friend_id += 1  # 다음 플레이어로 넘어감
 
 # 리턴값은 패자 이름(str) 리턴
 def end_game(playerName, friends):
-    print("🎶🎶게임이 종료되었습니다!🎶🎶")
+    print("🎶🎶게임이 종료되었습니다!🎶🎶\n")
+    time.sleep(1)
     print(f"🍻{playerName}님 제외 전원 한잔~🍻\n")
     drink_list = tuple(x for x in friends if x != playerName)
     # 패자 이름 출력(winner 제외)
@@ -189,9 +189,14 @@ def end_game(playerName, friends):
 # userName: 키보드를 입력하는 사람 / playerName: 게임을 시작한 사람 / friends: 게임에 참여한 사람
 def record_ver2(userName, playerName, friends):
     start_game()
-    print(f"{playerName}님 게임을 시작합니다!")
-    print(f"참여자는 {friends}입니다.")
+    time.sleep(1)
+    print(f"{playerName}님 게임을 시작합니다!\n")
+    time.sleep(1)
+    print(f"참여자는 {friends}입니다.\n")
+    time.sleep(1)
     track = random_track(friends)
     random_song(track)
     winner = random_song_answer_computer(track, userName, playerName, friends)
-    end_game(winner, friends)
+    loser = end_game(winner, friends)
+    # loser: 노래를 맞춘 사람 제외한 player(friendsName: tuple)
+    return loser
