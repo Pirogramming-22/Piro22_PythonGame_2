@@ -1,8 +1,5 @@
 # 1. User에 누가 있는지 받는 함수 => 어차피 call해서 쓸거라 불필요
 
-DEFAULT_FRIENDS = ("은서", "하연", "연선", "예진")
-user = "은서"
-
 # 2. 노래 랜덤으로 돌리는 함수
 import random
 import threading  # input을 3초 동안 받기 위해 사용
@@ -12,29 +9,29 @@ import time
 if sys.platform == 'win32':
     import msvcrt  # Windows용 키보드 입력 처리
 
-timeout = 5
+timeout = 5 # user에게 제한시간을 부여하기 위해 필요(5초)
 
 # input은 (userName: str, friends: tuple)로 정의
 
 def start_game():
     print("""
-    ⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠀⢱⣤⣤⣤⠠⢶⡿⠀⠀⠀⠙⠶⠽⠟⠀⠀⠀
-    ⠀⠀⠀⠀⠀⢠⠶⠿⠤⠤⠔⠛⡞⠦⣄⡠⡤⢊⣾⠟⠀⠀
-    ⠀⠀⠀⠀⠀⠀⢸⠉⠒⠤⠤⢤⡇⠀⠀⠀⠀⢀⢼⣇⠀⠀
-    ⠀⠈⠉⠉⠉⠉⠱⡀⠀⠀⠀⠀⠰⠀⠀⠀⠀⠀⠀⡏⠁⠀
-    ⠷⡀⠁⠀⠀⠈⡏⠑⠊⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇⢠⠁
-    ⣴⣒⠤⢤⡠⠔⡏⠀⠀⣀⠀⠀⠀⠀⠈⠙⠒⠢⢴⠑⢢⠀
-    ⠀⠊⠑⠂⠀⠤⣄⠀⠀⠀⠀⠀⠀⢀⣠⠄⠒⠀⠘⠁⠀⠀
-    ⢀⣾⡉⠣⠵⠶⠎⠉⠀⠀⠀⡠⠖⠛⠉⠉⠉⠙⢦⡀⠀⠀
-    ⠀⢷⣿⣵⣴⡆⢙⠉⡘⠟⠉⠁⠀⢀⡼⠁⠀⠀⠀⠀⠀⠀
-    ⢸⠘⠉⠀⠀⠀⣴⣶⢶⢀⠤⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀
-    ⢸⠘⠉⠀⠀⠀⣴⣶⢶⢀⠤⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀
-    ⠀⢠⠞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⣄⠀⠀⠀⠀⠀⠀⠀⠀
-    ⠀⠀⠀⡠⠓⠀⠀⠀⠘⠁⢒⣿⠍⠓⠒⠉⠀⠀⠀⠀⠀⠀
-    ⠀⠀⠀⠀⢰⠋⠀⠀⠀⡤⠊⠁⣠⣾⡿⠟⣉⠴⠁⠀⠀⠀
-    ⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⣀⠴⠊⣡⣴⣾⡿⣣⠃⠀⠀
-    ⠀⠀⠀⠀ ⠀⠀⠀⣀⠤⠔⠒⠒⡄⢀⣠⠤⠤⠦⡄⠀
+        ⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⣀⠴⠊⣡⣴⣾⡿⣣⠃⠀⠀
+        ⠀⠀⠀⠀⢰⠋⠀⠀⠀⡤⠊⠁⣠⣾⡿⠟⣉⠴⠁⠀⠀⠀
+        ⠀⠀⠀⡠⠓⠀⠀⠀⠘⠁⢒⣿⠍⠓⠒⠉⠀⠀⠀⠀⠀⠀
+        ⠀⢠⠞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⣄⠀⠀⠀⠀⠀⠀⠀⠀
+        ⠀⡏⠀⠀⠀⠀⠴⠂⠀⠀⠀⠀⠀⠘⢦⠀⠀⠀⠀⠀⠀⠀
+        ⢸⠘⠉⠀⠀⠀⣴⣶⢶⢀⠤⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀
+        ⠀⢷⣿⣵⣴⡆⢙⠉⡘⠟⠉⠁⠀⢀⡼⠁⠀⠀⠀⠀⠀⠀
+        ⢀⣾⡉⠣⠵⠶⠎⠉⠀⠀⠀⡠⠖⠛⠉⠉⠉⠙⢦⡀⠀⠀
+        ⠀⠊⠑⠂⠀⠤⣄⠀⠀⠀⠀⠀⠀⢀⣠⠄⠒⠀⠘⠁⠀⠀
+        ⣴⣒⠤⢤⡠⠔⡏⠀⠀⣀⠀⠀⠀⠀⠈⠙⠒⠢⢴⠑⢢⠀
+        ⢸⠘⠉⠀⠀⠀⣴⣶⢶⢀⠤⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀
+        ⠷⡀⠁⠀⠀⠈⡏⠑⠊⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇⢠⠁
+        ⠀⠈⠉⠉⠉⠉⠱⡀⠀⠀⠀⠀⠰⠀⠀⠀⠀⠀⠀⡏⠁⠀
+        ⠀⠀⠀⠀⠀⠀⢸⠉⠒⠤⠤⢤⡇⠀⠀⠀⠀⢀⢼⣇⠀⠀
+        ⠀⠀⠀⠀⠀⢠⠶⠿⠤⠤⠔⠛⡞⠦⣄⡠⡤⢊⣾⠟⠀⠀
+        ⠀⠀⠀⠀⠀⢱⣤⣤⣤⠠⢶⡿⠀⠀⠀⠙⠶⠽⠟⠀⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     """)
 
 def random_track(friends):
@@ -94,67 +91,107 @@ def get_input(prompt, result):
         if rlist:
             result.append(sys.stdin.readline().strip())
 
-# 4. user의 input으로 정답인지 아닌지 확인하는 함수
-def random_song_answer(track, userName, friends):
-    friend_id = friends.index(userName)
+
+def print_correct(player):
+    print(f"\n\033[1m🌟🌟{player}님 정답입니다!🌟🌟\033[0m\n\n")
+
+# 사람 vs 컴퓨터
+# 4. user의 input으로 정답인지 아닌지 확인하는 함수 (user 시작으로 설정)
+def random_song_answer_computer(track, userName, playerName, friends):
+    friend_id = friends.index(playerName)  # 게임을 시작하는 user index
+
+    answer = ""
+    match track:
+        case 1:
+            answer = "Home Sweet Home"
+        case 2:
+            answer = "Happy"
+        case 3:
+            answer = "주저하는 연인들을 위해"
+        case 4:
+            answer = "Blueming"
+
     while True:
         if friend_id == len(friends):
             friend_id = 0
+        # player가 유저인지 확인
+        if friends[friend_id] == userName:
+            print('-'*20 + '\n')
+            print("⚠️⚠️ 5초 안에 정답을 입력해주세요!! 안그러면 다음 사람에게 차례가 넘어갑니다 ⚠️⚠️\n")
+            print('-'*20 + '\n')
+            result = []
+            input_thread = threading.Thread(target=get_input, args=(f"{friends[friend_id]}님 위 가사에 해당하는 제목을 입력해 주세요!🎶🎶(가사를 다시 보고 싶다면 '가사'를 입력해 주세요)\n\n{userName} : ", result))
+            input_thread.daemon = True
+            input_thread.start()
+            input_thread.join(timeout)
 
-        print("⚠️⚠️ 5초 안에 정답을 입력해주세요!! 안그러면 다음 사람에게 차례가 넘어갑니다 ⚠️⚠️\n")
-        result = []
-        input_thread = threading.Thread(target=get_input, args=(f"{friends[friend_id]}님 위 가사에 해당하는 제목을 입력해 주세요!🎶🎶(가사를 다시 보고 싶다면 '가사'를 입력해 주세요)\n", result))
-        input_thread.daemon = True
-        input_thread.start()
-        input_thread.join(timeout)
+            if not result:  # 시간 초과
+                print(f"\n\n⏰ {userName}님 시간 초과! 다음 사람의 차례입니다 ⏰\n")
+                friend_id += 1
+                continue
 
-        if not result:  # 시간 초과
-            print(f"\n⏰ {friends[friend_id]}님 시간 초과! 다음 사람의 차례입니다 ⏰\n")
-            friend_id += 1
-            continue
-
-        user_input = result[0]
-        
-        if user_input == "가사":
-            random_song(track)
-            continue
+            user_input = result[0]
             
-        # 여기서부터 정답 체크
-        if track == 1:
-            if user_input in ["Home Sweet Home", "home sweet home", "홈 스윗 홈", "홈스윗홈"]:
-                print(f"🌟🌟{friends[friend_id]}님 정답입니다!🌟🌟\n\n")
-                return friends[friend_id]  # 승자 반환
-        elif track == 2:
-            if user_input in ["Happy", "happy", "해피"]:
-                print(f"🌟🌟{friends[friend_id]}님 정답입니다!🌟🌟\n\n")
-                return friends[friend_id]
-        elif track == 3:
-            if user_input in ["주저하는 연인들을 위해", "주저하는연인들을위해"]:
-                print(f"🌟🌟{friends[friend_id]}님 정답입니다!🌟🌟\n\n")
-                return friends[friend_id]
-        else:
-            if user_input in ["Blueming", "blueming", "블루밍"]:
-                print(f"🌟🌟{friends[friend_id]}님 정답입니다!🌟🌟\n\n")
-                return friends[friend_id]
+            if user_input == "가사":
+                random_song(track)
+                continue
+
+            user_input = result[0]
         
-        print("☠️ 틀렸습니다 ㅠㅠ ☠️\n")
-        friend_id += 1
+            if user_input == "가사":
+                random_song(track)
+                continue
+                
+            # 여기서부터 정답 체크
+            if track == 1:
+                if user_input in ["Home Sweet Home", "home sweet home", "홈 스윗 홈", "홈스윗홈"]:
+                    print_correct(userName)
+                    return userName  # 승자 반환
+            elif track == 2:
+                if user_input in ["Happy", "happy", "해피"]:
+                    print_correct(userName)
+                    return userName
+            elif track == 3:
+                if user_input in ["주저하는 연인들을 위해", "주저하는연인들을위해"]:
+                    print_correct(userName)
+                    return userName
+            else:
+                if user_input in ["Blueming", "blueming", "블루밍"]:
+                    print_correct(userName)
+                    return userName
+            
+            print("☠️ 틀렸습니다 ㅠㅠ ☠️\n")
+            friend_id += 1
+        # player가 컴퓨터인지 확인
+        else:
+            time.sleep(3)
+            computer_answer_list = ['음,,,,🤔', '어???!!!!🫨', '너무 빨라요 ㅠㅠㅠ😭', '아 뭔지 알 것 같은데🤨', '아니 이게 뭐야??🥶']
+            computer_answer_list.append(answer) # 컴퓨터 정답 리스트에 추가
+
+            computer_answer = random.choice(computer_answer_list)
+
+            print(f"{friends[friend_id]} : {computer_answer}\n")
+            if computer_answer == answer:
+                print_correct(friends[friend_id])
+                return friends[friend_id]  # 컴퓨터가 이겼을 때만 게임 종료
+            else:
+                print("☠️ 틀렸습니다 ㅠㅠ ☠️\n")
+                friend_id += 1  # 다음 플레이어로 넘어감
 
 # 리턴값은 패자 이름(str) 리턴
-def end_game(userName, friends):
+def end_game(playerName, friends):
     print("🎶🎶게임이 종료되었습니다!🎶🎶")
-    print(f"🍻{userName}님 제외 전원 한잔~🍻\n")
-    drink_list = tuple(x for x in DEFAULT_FRIENDS if x != userName)
+    print(f"🍻{playerName}님 제외 전원 한잔~🍻\n")
+    drink_list = tuple(x for x in friends if x != playerName)
     # 패자 이름 출력(winner 제외)
     return drink_list
 
-def record_ver2():
+# userName: 키보드를 입력하는 사람 / playerName: 게임을 시작한 사람 / friends: 게임에 참여한 사람
+def record_ver2(userName, playerName, friends):
     start_game()
-    print(f"{user}님 게임을 시작합니다!")
-    print(f"참여자는 {DEFAULT_FRIENDS}입니다.")
-    track = random_track(DEFAULT_FRIENDS)
+    print(f"{playerName}님 게임을 시작합니다!")
+    print(f"참여자는 {friends}입니다.")
+    track = random_track(friends)
     random_song(track)
-    winner = random_song_answer(track, user, DEFAULT_FRIENDS)
-    end_game(winner, DEFAULT_FRIENDS)
-
-record_ver2()
+    winner = random_song_answer_computer(track, userName, playerName, friends)
+    end_game(winner, friends)
