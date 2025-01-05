@@ -56,7 +56,7 @@ def play_apartment_game(userName: str, friends: tuple):
         if floor == floors:  
             print(f"\n🎉 {current_hand[1]}(이)가 마지막 층({floors}층)을 쌓았습니다!")
             print(f"아 누가누가 술을 마셔🍺 {current_hand[1]}(이)가 술을 마셔🍺 원❗샷❗")
-            break
+            return current_hand[1]
 
     print("\n게임 종료! 🎉")
 
