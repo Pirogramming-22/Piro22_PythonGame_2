@@ -102,12 +102,16 @@ def getFriends():
 
     return selectedFriends
 
-def printScoreboard(players: dict):
-    # - input: {유저이름 : 남은주량} 딕셔너리
+def printScoreboard(players: dict, max_life_dict: dict):
+    # - input: {유저이름 : 남은주량} 딕셔너리/ max_life_dict: dict추가함
     # - 기능: (4)pdf대로 지금까지마신거, 치사량까지 남은양 출력
     # - return: X
-    print("스코어보드~~~~:", players)
-    pass
+    print("~"*60)
+    for player, remaining_life in players.items():
+        max_life = max_life_dict[player]
+        drank = max_life - remaining_life
+        print(f"{player}은(는) 지금까지 {drank}🍺! 치사량까지 {remaining_life}")
+    print("~"*60)
 
 def printGameList():
     # - input: X
@@ -181,8 +185,12 @@ def printGameOver(dead: str):
 if __name__ == "__main__":
     printIntro()
     userName = getUserName()
-    players = {userName : getUserLife()}
-    players.update(getFriends()) #예외처리 할 것: 유저와 랜덤선택된 컴퓨터 npc의 이름이 같으면 문제 발생함
+    user_life = getUserLife()
+    players = {userName: user_life}  # 현재 남은 주량
+    max_life_dict = {userName: user_life} # 최대 주량
+    friends = getFriends() #예외처리 할 것: 유저와 랜덤선택된 컴퓨터 npc의 이름이 같으면 문제 발생함
+    players.update(friends)  # 친구들의 남은 주량 추가
+    max_life_dict.update(friends)  # 친구들의 최대 주량 추가
     printScoreboard(players)
     printGameList()
     dead = ""
