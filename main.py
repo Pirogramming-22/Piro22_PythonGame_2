@@ -219,13 +219,13 @@ if __name__ == "__main__":
     friends = getFriends() #예외처리 할 것: 유저와 랜덤선택된 컴퓨터 npc의 이름이 같으면 문제 발생함
     players.update(friends)  # 친구들의 남은 주량 추가
     max_life_dict.update(friends)  # 친구들의 최대 주량 추가
-    printScoreboard(players)
+    printScoreboard(players, max_life_dict)
     printGameList()
     dead = ""
     loser = executeGame(True, userName)
     players[loser] = players[loser] - 1
     print("누가술을마셔",loser,"가술을마셔")
-    printScoreboard(players)
+    printScoreboard(players, max_life_dict)
     while(everyoneAlived(players)):
         printGameList()
         
