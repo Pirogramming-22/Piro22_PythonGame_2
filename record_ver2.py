@@ -187,7 +187,7 @@ def end_game(playerName, friends):
     return drink_list
 
 # userName: 키보드를 입력하는 사람 / playerName: 게임을 시작한 사람 / friends: 게임에 참여한 사람
-def record_ver2(userName, playerName, friends):
+def record_ver2(userName, friends, playerName):
     start_game()
     time.sleep(1)
     print(f"{playerName}님 게임을 시작합니다!\n")
@@ -196,6 +196,11 @@ def record_ver2(userName, playerName, friends):
     time.sleep(1)
     track = random_track(friends)
     random_song(track)
+    
+    ###임시 수정
+    if userName == playerName:
+        friends = (userName, ) + friends[0:]    
+    
     winner = random_song_answer_computer(track, userName, playerName, friends)
     loser = end_game(winner, friends)
     # loser: 노래를 맞춘 사람 제외한 player(friendsName: tuple)
