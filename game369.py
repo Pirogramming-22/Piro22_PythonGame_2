@@ -2,11 +2,11 @@
 import time
 
 #테스트용
-userName = '명경'
-friends = ("은성", "수연", "재훈", "태희")
+#userName = '명경'
+#friends = ("은성", "수연", "재훈", "태희")
     
 #게임 실행
-def game_369(userName: str, friends: tuple):
+def game_369(userName: str, friends: tuple, gameSelectPlayer: str):
     # 369 오프닝
 
     def intro_369():
@@ -78,4 +78,4 @@ ______   ____ ______
 
 # 테스트 실행
 if __name__ == "__main__":
-    game_369(userName, friends)
+    game_369("p0", ("p1", "p2", "p3"), "p2")
