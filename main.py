@@ -142,6 +142,10 @@ def executeGame(isUserTurn: bool, gameSelectPlayer: str):
         5: parktaehee_strawberry
     }
     
+    gameSelectPlayer = random.choice(game_queue)
+    game_queue.remove(gameSelectPlayer)
+    isUserTurn = (gameSelectPlayer == userName)
+
     # - input: isUserTurn = 게임을 선택하는 게 유저인지(true) 컴퓨터인지(false)
     # - input: gameSelectPlayer = 게임 선택한 인물 이름
     # - 기능: 유저차례라면 게임 선택 받기 및 게임 실행. 유저차례 아니면 랜덤으로 게임 선택해서 실행(출력양식 pdf 6번 아래 3개줄 참고)
@@ -235,9 +239,6 @@ if __name__ == "__main__":
         if input("술게임 진행중 ! 다른 사람의 턴입니다. 그만하고 싶으면 \"exit\"를, 계속하고 싶으면 아무키나 입력해 주세요! : ") == "exit":
             break
         # 여기에 다음 플레이할 사람이 유저인지 컴퓨터일지 정하는 로직 추가
-        gameSelectPlayer = random.choice(game_queue)
-        game_queue.remove(gameSelectPlayer)
-        isUserTurn = (gameSelectPlayer == userName)
 
         loser = executeGame(isUserTurn, gameSelectPlayer)  # 요기: 다음 플레이할 사람이 유저면 True, 컴퓨터면 False를 인자로 전달하도록 고쳐야함
         players[loser] = players[loser] - 1
