@@ -133,7 +133,7 @@ def printGameList():
     print("                  🍺 5. 딸기 게임🍓 ")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-def executeGame(isUserTurn: bool, gameSelectPlayer: str):
+def executeGame(isUserTurn: bool, gameSelectPlayer: str, selectedFriends: tuple):
     # 미니게임 import
     from ApartGame import play_apartment_game
     from dubu import dubuGame
@@ -152,6 +152,8 @@ def executeGame(isUserTurn: bool, gameSelectPlayer: str):
     
     # - input: isUserTurn = 게임을 선택하는 게 유저인지(true) 컴퓨터인지(false)
     isUserTurn =  (gameSelectPlayer == userName)
+    friends = selectedFriends
+
 
     # - input: gameSelectPlayer = 게임 선택한 인물 이름
     # - 기능: 유저차례라면 게임 선택 받기 및 게임 실행. 유저차례 아니면 랜덤으로 게임 선택해서 실행(출력양식 pdf 6번 아래 3개줄 참고)
@@ -163,14 +165,14 @@ def executeGame(isUserTurn: bool, gameSelectPlayer: str):
                 if 1<=selectedGame<=5:
                     break
                 else:
-                    print("게임은~ 5번까지~ 있어요호~ 다!시!입!력!해~! : ")
+                    print("게임은~ 5번까지~ 있어요호~ 다!시!입!력!해~!😁 : ")
             except ValueError:
                 print("게임은~ 5번까지~ 있어요호~ 다!시!입!력!해~! (숫자로 입력해주세요) : ")
     else:
         selectedGame = random.randint(1, 5)
         print(f"{gameSelectPlayer}(이)가 좋아하는 랜덤 게임~ 랜덤 게임~ 무슨 게임? : {selectedGame} ")
         time.sleep(1)
-    print(f"~~~~~~~~~~~~~~~~~~~~~~~\n{gameSelectPlayer}님이 게임선택했읍니다!😁")
+    print(f"~~~~~~~~~~~~~~~~~~~~~~~\n{gameSelectPlayer}님이 게임을 선택했습니다!😁")
     loser = game_numberlist[selectedGame](userName, friends, gameSelectPlayer)
     return loser
 
@@ -228,9 +230,8 @@ if __name__ == "__main__":
     printScoreboard(players, max_life_dict)
     printGameList()
     dead = ""
-    loser = executeGame(True, userName)
+    loser = executeGame(True, userName, tuple(friends.keys()))
     players[loser] = players[loser] - 1
-    print("누가술을마셔",loser,"가술을마셔")
 
     #첫 라운드에서 치사량 도달 시 게임 종료
     if players[loser] <=0 :
@@ -252,9 +253,8 @@ if __name__ == "__main__":
         current_player = player_names[current_turn_index]
         is_user_turn = (current_player == userName)
 
-        loser = executeGame(is_user_turn, current_player)  # `friends`를 유지해서 전달
+        loser = executeGame(is_user_turn, current_player, tuple(friends.keys()))  # `friends`를 유지해서 전달
         players[loser] = players[loser] - 1
-        print("누가술을마셔", loser, "가술을마셔")
         printScoreboard(players, max_life_dict)
 
         dead = loser
