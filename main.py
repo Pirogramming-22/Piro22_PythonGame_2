@@ -120,9 +120,9 @@ def printGameList():
     print("~~~~~~~~~~~~~~~~~ 🍻 오늘의 Alcohol GAME 🍻~~~~~~~~~~~~~~~~~")
     print("                  🍺 1. 아파트 게임 🏢 ")
     print("                  🍺 2. 두부 게임 🍞 ")
-    print("                  🍺 1. 369 게임 3️⃣6️⃣9️⃣ ")
-    print("                  🍺 1. 레코드 ver2 🎹 ")
-    print("                  🍺 1. 딸기 게임🍓 ")
+    print("                  🍺 3. 369 게임 3️⃣6️⃣9️⃣ ")
+    print("                  🍺 4. 레코드 ver2 🎹 ")
+    print("                  🍺 5. 딸기 게임🍓 ")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 def executeGame(isUserTurn: bool, gameSelectPlayer: str):
@@ -219,19 +219,12 @@ if __name__ == "__main__":
     friends = getFriends() #예외처리 할 것: 유저와 랜덤선택된 컴퓨터 npc의 이름이 같으면 문제 발생함
     players.update(friends)  # 친구들의 남은 주량 추가
     max_life_dict.update(friends)  # 친구들의 최대 주량 추가
-    printScoreboard(players)
+    printScoreboard(players, max_life_dict)
     printGameList()
     dead = ""
     loser = executeGame(True, userName)
     players[loser] = players[loser] - 1
     print("누가술을마셔",loser,"가술을마셔")
-    printScoreboard(players)
-
-
-    #명경수정
-    players_keys = list(players.keys())  #명경수정
-    game_queue = players_keys.copy()      #명경수정
-
     while(everyoneAlived(players)):
         printGameList()
         
@@ -246,7 +239,7 @@ if __name__ == "__main__":
         loser = executeGame(isUserTurn, gameSelectPlayer)  # 요기: 다음 플레이할 사람이 유저면 True, 컴퓨터면 False를 인자로 전달하도록 고쳐야함
         players[loser] = players[loser] - 1
         print("누가술을마셔",loser,"가술을마셔")
-        printScoreboard(players)
+        printScoreboard(players, max_life_dict)
         
         dead = loser
         
