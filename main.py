@@ -238,10 +238,19 @@ if __name__ == "__main__":
         players[loser] = players[loser] - 1
 
     #첫 라운드에서 치사량 도달 시 게임 종료
-    if players[loser] <=0 :
-        dead=loser
+    dead = None
+    if isinstance(loser, tuple):
+        dead = next((name for name in loser if players[name] <= 0), None)
+    else:
+        if players[loser] <= 0:
+            dead = loser
+
+    if dead:
         printGameOver(dead)
         exit(0)
+
+
+
 
     current_turn_index = 0  # 플레이어 순환을 위한 인덱스
     player_names = list(players.keys())  # 플레이어 이름 리스트
