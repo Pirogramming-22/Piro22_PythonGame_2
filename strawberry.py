@@ -1,6 +1,6 @@
 import random
 
-def parktaehee_strawberry(userName: str, friends: tuple):
+def parktaehee_strawberry(userName: str, friends: tuple, gameSelectPlayer: str):
     players = [userName] + list(friends)
     player_count = len(players)
 
@@ -12,12 +12,12 @@ def parktaehee_strawberry(userName: str, friends: tuple):
             _ /—-\              /—-\_
             \ \   \ —  - — —-  /   / /
              \ \   \          /   / /
-            /  - - - -\ - - - —/ - ———  \\
-          /              ———              \\
-        |     ㅁ   ㅁ     ㅁ   ㅁ    ㅁ ㅁ     |
-        |     ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ     |
-        |       ㅁㅁㅁㅁㅁㅁㅁㅁ    ㅁ  ㅁ       |
-        \    ㅁ    ㅁ   ㅁ    ㅁㅁㅁㅁ   ㅁ    /
+            /  - - - -\ - - - —/ - ——— \\
+          /              ———            \\
+        |     ㅁ   ㅁ     ㅁ   ㅁ    ㅁ ㅁ   |
+        |     ㅁㅁㅁ ㅁㅁ ㅁㅁㅁㅁ ㅁㅁㅁㅁㅁ    |
+        |       ㅁㅁㅁㅁㅁㅁㅁㅁ    ㅁ  ㅁ     |
+         \    ㅁ    ㅁ   ㅁ    ㅁㅁㅁㅁ   ㅁ  /
           \      ㅁ  ㅁ    ㅁ ㅁ    ㅁㅁ    /
             \        ㅁㅁㅁㅁㅁㅁㅁ        /
               \        ㅁㅁㅁㅁㅁ       /
