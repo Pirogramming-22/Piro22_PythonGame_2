@@ -226,6 +226,12 @@ if __name__ == "__main__":
     players[loser] = players[loser] - 1
     print("누가술을마셔",loser,"가술을마셔")
     printScoreboard(players)
+
+
+    #명경수정
+    players_keys = list(players.keys())  #명경수정
+    game_queue = players_keys.copy()      #명경수정
+
     while(everyoneAlived(players)):
         printGameList()
         
@@ -233,7 +239,11 @@ if __name__ == "__main__":
             break
         
         # 여기에 다음 플레이할 사람이 유저인지 컴퓨터일지 정하는 로직 추가
-        loser = executeGame(False, "예진")  # 요기: 다음 플레이할 사람이 유저면 True, 컴퓨터면 False를 인자로 전달하도록 고쳐야함
+        gameSelectPlayer = random.choice(game_queue)
+        game_queue.remove(gameSelectPlayer)
+        isUserTurn = (gameSelectPlayer == userName)
+
+        loser = executeGame(isUserTurn, gameSelectPlayer)  # 요기: 다음 플레이할 사람이 유저면 True, 컴퓨터면 False를 인자로 전달하도록 고쳐야함
         players[loser] = players[loser] - 1
         print("누가술을마셔",loser,"가술을마셔")
         printScoreboard(players)
