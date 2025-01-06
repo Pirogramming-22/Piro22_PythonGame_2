@@ -245,6 +245,7 @@ if __name__ == "__main__":
         if players[loser] <= 0:
             dead = loser
 
+    printScoreboard(players, max_life_dict)
     if dead:
         printGameOver(dead)
         exit(0)
