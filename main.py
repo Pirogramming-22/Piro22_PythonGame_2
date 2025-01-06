@@ -62,7 +62,8 @@ def getUserLife():
             if not (1 <= alcohol<= 5):
                 ("설마 소주 반병도 못먹는 술찌는 아니겠죠???🧐🧐 1 ~ 5 사이의 숫자를 입력해주세요!")
             else:
-                print(f"유저의 주량은: {alcohol}\n")
+                alcohol *= 2
+                print(f"오호 당신의 주량은 {alcohol} 잔 이시군요..!\n")
                 break
     return alcohol
 
@@ -80,9 +81,14 @@ def getFriends():
             print('⚠️'*20)
             print('\n\n')
         else:
-            if not (1 <= friendsNum <= 3):
+            if friendsNum > 3:
                 print('⚠️'*20)
                 print("지금은 사회적 거리 두기 기간이라 4인 이상 모임은 금지예요. 😷")
+                print('⚠️'*20)
+                print('\n\n')
+            elif friendsNum <= 0:
+                print('⚠️'*20)
+                print("안타깝게도 술게임을 혼자할 수는 없어요... 😥")
                 print('⚠️'*20)
                 print('\n\n')
             else:
@@ -244,8 +250,6 @@ if __name__ == "__main__":
         print("누가술을마셔", loser, "가술을마셔")
         printScoreboard(players, max_life_dict)
 
-        if not everyoneAlived(players):
-            dead = loser
-            break
+        dead = loser
 
     printGameOver(dead)
