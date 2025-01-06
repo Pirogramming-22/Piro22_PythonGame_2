@@ -231,7 +231,11 @@ if __name__ == "__main__":
     printGameList()
     dead = ""
     loser = executeGame(True, userName, tuple(friends.keys()))
-    players[loser] = players[loser] - 1
+    if type(loser) == tuple:
+        for i in range(len(loser)):
+            players[loser[i]] = players[loser[i]] - 1    
+    else:
+        players[loser] = players[loser] - 1
 
     #첫 라운드에서 치사량 도달 시 게임 종료
     if players[loser] <=0 :
@@ -254,7 +258,11 @@ if __name__ == "__main__":
         is_user_turn = (current_player == userName)
 
         loser = executeGame(is_user_turn, current_player, tuple(friends.keys()))  # `friends`를 유지해서 전달
-        players[loser] = players[loser] - 1
+        if type(loser) == tuple:
+            for i in range(len(loser)):
+                players[loser[i]] = players[loser[i]] - 1    
+        else:
+            players[loser] = players[loser] - 1
         printScoreboard(players, max_life_dict)
 
         dead = loser
