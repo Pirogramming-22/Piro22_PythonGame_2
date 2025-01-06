@@ -245,7 +245,8 @@ if __name__ == "__main__":
         printGameList()
         
         if input("술게임 진행중 ! 다른 사람의 턴입니다. 그만하고 싶으면 \"exit\"를, 계속하고 싶으면 아무키나 입력해 주세요! : ") == "exit":
-            break
+            print("지치셨군요... 이제 당신은 잠에 듭니다... 💤")
+            exit(0)
         
         current_turn_index = (current_turn_index + 1) % len(player_names)
         current_player = player_names[current_turn_index]
