@@ -225,6 +225,10 @@ if __name__ == "__main__":
     loser = executeGame(True, userName)
     players[loser] = players[loser] - 1
     print("누가술을마셔",loser,"가술을마셔")
+
+    players_keys = list(players.keys())  #명경수정
+    game_queue = players_keys.copy()      #명경수정
+
     while(everyoneAlived(players)):
         printGameList()
         
