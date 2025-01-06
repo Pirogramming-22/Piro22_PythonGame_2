@@ -159,7 +159,7 @@ def executeGame(isUserTurn: bool, gameSelectPlayer: str, selectedFriends: tuple)
                 if 1<=selectedGame<=5:
                     break
                 else:
-                    print("게임은~ 5번까지~ 있어요호~ 다!시!입!력!해~! : ")
+                    print("게임은~ 5번까지~ 있어요호~ 다!시!입!력!해~!😁 : ")
             except ValueError:
                 print("게임은~ 5번까지~ 있어요호~ 다!시!입!력!해~! (숫자로 입력해주세요) : ")
     else:
