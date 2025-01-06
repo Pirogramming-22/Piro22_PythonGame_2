@@ -68,6 +68,8 @@ ______   ____ ______
 
         # 입력 검증
         if not check_369(number, choice):
+            print(f"\n아 누가누가 술을 마셔 {current_player}이(가) 술을 마셔 원~~~샷!🍺")
+            time.sleep(1)            
             return current_player
         
         # 차례 업데이트
